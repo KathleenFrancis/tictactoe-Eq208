@@ -44,7 +44,7 @@ class Board {
             return 0;
         }
 
-        return 0;
+        return 1;
     }
 
     private boolean isFull() {
@@ -94,7 +94,7 @@ class Board {
     }
 
     // méthode pour générer les coups possibles
-    private ArrayList<Move> possibleMoves() {
+    public ArrayList<Move> possibleMoves() {
         ArrayList<Move> moves = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -105,4 +105,51 @@ class Board {
         }
         return moves;
     }
+
+    // attribut un point a chaque
+    public int getHeuristique(Mark mark) {
+        int plateauCPU = 0;
+        int plateauOpposant = 0;
+
+        plateauCPU = countHeuristiquePossibility(mark);
+        plateauOpposant = countHeuristiquePossibility(getOppositeMark(mark));
+        return plateauCPU - plateauOpposant;
+    }
+
+    private int countHeuristiquePossibility(Mark mark) {
+        int nbWinning = 0;
+        Mark oppositMark = getOppositeMark(mark);
+        for (int i = 0; i < 3; i++) {
+            if (board[0][i] != oppositMark && board[1][i] != oppositMark && board[2][i] != oppositMark) {
+                nbWinning++;
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            if (board[i][0] != oppositMark && board[i][1] != oppositMark && board[i][2] != oppositMark) {
+                nbWinning++;
+            }
+        }
+
+        if (board[1][1] != oppositMark) {
+            if (board[0][0] != oppositMark && board[2][2] != oppositMark) {
+                nbWinning++;
+            }
+
+            if (board[0][2] != oppositMark && board[2][0] != oppositMark) {
+                nbWinning++;
+            }
+        }
+        return nbWinning;
+    }
+
+    public void printBoard() {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                System.out.print(board[row][col] + " ");
+            }
+            System.out.println();
+        }
+    }
+
 }
