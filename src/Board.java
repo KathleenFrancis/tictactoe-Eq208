@@ -23,7 +23,7 @@ class Board {
     // Ne pas changer la signature de cette méthode
     public void play(Move m, Mark mark) {
 
-        if (board[m.getRow()][m.getCol()] == Mark.EMPTY) {
+        if (board[m.getRow()][m.getCol()] == Mark.EMPTY || mark == Mark.EMPTY) {
             board[m.getRow()][m.getCol()] = mark;
         }
 
@@ -58,7 +58,7 @@ class Board {
         return true;
     }
 
-    private Mark getOppositeMark(Mark mark) {
+    public Mark getOppositeMark(Mark mark) {
         if (mark == Mark.O) {
             return Mark.X;
         } else {
@@ -146,10 +146,24 @@ class Board {
     public void printBoard() {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                System.out.print(board[row][col] + " ");
+                if (board[row][col] == Mark.EMPTY) {
+                    System.out.print("  | ");
+                } else {
+                    System.out.print(board[row][col] + " | ");
+                }
+
             }
             System.out.println();
+            if (row != 2) {
+                System.out.println("------------");
+            }
+
         }
+        System.out.println();
+    }
+
+    public Mark position(int x, int y) {
+        return board[x][y];
     }
 
 }

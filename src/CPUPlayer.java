@@ -67,7 +67,7 @@ class CPUPlayer {
         }
 
         if (numExploredNodes < Integer.MAX_VALUE) {
-            numExploredNodes++;
+            // numExploredNodes++;
         } else {
             return board.getHeuristique(cpu);
         }
@@ -76,6 +76,7 @@ class CPUPlayer {
         if (isMax) {
             int maxScore = Integer.MIN_VALUE;
             for (Move move : possibleMoves) {
+                numExploredNodes++;
                 board.play(move, cpu);
                 int score = minMax(board, false);
                 maxScore = Math.max(score, maxScore);
@@ -87,12 +88,15 @@ class CPUPlayer {
         } else {
             int minScore = Integer.MAX_VALUE;
             for (Move move : possibleMoves) {
-                board.play(move, cpu);
-                int score = minMax(board, false);
+                numExploredNodes++;
+                board.play(move, board.getOppositeMark(cpu));
+                int score = minMax(board, true);
                 minScore = Math.min(score, minScore);
                 // enlevez le coup
                 board.play(move, Mark.EMPTY);
             }
+            board.printBoard();
+            System.out.println(evaluation + " & " + numExploredNodes);
             return (minScore);
         }
     }
