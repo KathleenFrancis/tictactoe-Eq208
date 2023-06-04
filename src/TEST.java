@@ -148,6 +148,24 @@ public class TEST {
 
         CPUPlayer cpuPlayer = new CPUPlayer(Mark.X);
         ArrayList<Move> nextMove = new ArrayList<>();
+        nextMove = cpuPlayer.getNextMoveAB(board);
+        board.play(nextMove.get(0), Mark.X);
+
+        // AB= MinMax
+
+        Assert.assertEquals(10, cpuPlayer.getNumOfExploredNodes());
+    }
+
+    @Test
+    public void testAB_3() {
+        Board board = new Board();
+        board.play(new Move(0, 0), Mark.X);
+        board.play(new Move(0, 1), Mark.X);
+        board.play(new Move(0, 2), Mark.O);
+        board.play(new Move(1, 1), Mark.O);
+
+        CPUPlayer cpuPlayer = new CPUPlayer(Mark.X);
+        ArrayList<Move> nextMove = new ArrayList<>();
         nextMove = cpuPlayer.getNextMoveMinMax(board);
         board.play(nextMove.get(0), Mark.X);
 
