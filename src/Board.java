@@ -47,6 +47,10 @@ class Board {
         return 1;
     }
 
+    /**
+     * 
+     * @return true si le board est vide
+     */
     private boolean isFull() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -58,6 +62,11 @@ class Board {
         return true;
     }
 
+    /**
+     * 
+     * @param mark le jetton du joueur.
+     * @return mark qui représente jetton du joueur opposé.
+     */
     public Mark getOppositeMark(Mark mark) {
         if (mark == Mark.O) {
             return Mark.X;
@@ -66,6 +75,11 @@ class Board {
         }
     }
 
+    /**
+     * 
+     * @param mark un joeueur X ou O.
+     * @return un boolean, true si le joueur mark a gagné.
+     */
     private boolean win(Mark mark) {
         for (int i = 0; i < 3; i++) {
             if (board[0][i] == mark && board[1][i] == mark && board[2][i] == mark) {
@@ -116,6 +130,10 @@ class Board {
         return plateauCPU - plateauOpposant;
     }
 
+    // heurisique pis permet d'evaluer la valeur d'un coup si nous avons pas
+    // explorer tous ses enfants.
+    // Elle est basé sur le nb de possibilite de X de gagner - nb de possibilite de
+    // O de gagner.
     private int countHeuristiquePossibility(Mark mark) {
         int nbWinning = 0;
         Mark oppositMark = getOppositeMark(mark);

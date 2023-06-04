@@ -53,6 +53,12 @@ class CPUPlayer {
         return bestMoves;
     }
 
+    /**
+     * 
+     * @param board Le jeu actuelle.
+     * @param isMax Boolean qui détemine s'il l'on calcule un min ou un max.
+     * @return Retourne la valeur min ou max.
+     */
     private int minMax(Board board, boolean isMax) {
         // condition d'arret
         int evaluation = board.evaluate(cpu);
@@ -129,6 +135,14 @@ class CPUPlayer {
 
     }
 
+    /**
+     * 
+     * @param board Le jeu actuelle.
+     * @param isMax Boolean qui détemine s'il l'on calcule un min ou un max.
+     * @param alpha La valeur associée à chaque noeud Max. Coût du best successeur.
+     * @param beta  La valeur associée à chaque noeud Min. Coût du pire successeur.
+     * @return Retourne la valeur alpha ou beta.
+     */
     private int alphaBeta(Board board, Boolean isMax, int alpha, int beta) {
         // condition d'arret
         int evaluation = board.evaluate(cpu);
