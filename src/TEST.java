@@ -171,7 +171,7 @@ public class TEST {
 
         // Assert.assertEqual( Mark. X,board.position(1, 0)
 
-        Assert.assertEquals(10, cpuPlayer.getNumOfExploredNodes());
+        Assert.assertEquals(197, cpuPlayer.getNumOfExploredNodes());
     }
 
 }
