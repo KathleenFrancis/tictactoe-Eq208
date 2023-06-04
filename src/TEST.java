@@ -92,7 +92,67 @@ public class TEST {
         board.play(nextMove.get(0), Mark.X);
 
         Assert.assertEquals(board.position(0, 1), Mark.X);
-        board.printBoard();
+
+        Assert.assertEquals(10, cpuPlayer.getNumOfExploredNodes());
+    }
+
+    @Test
+    public void testMinMax_2() {
+        Board board = new Board();
+        board.play(new Move(0, 0), Mark.X);
+        board.play(new Move(0, 1), Mark.X);
+        board.play(new Move(1, 1), Mark.O);
+        board.play(new Move(1, 2), Mark.O);
+        board.play(new Move(2, 1), Mark.O);
+        board.play(new Move(2, 2), Mark.X);
+
+        CPUPlayer cpuPlayer = new CPUPlayer(Mark.X);
+        ArrayList<Move> nextMove = new ArrayList<>();
+        nextMove = cpuPlayer.getNextMoveMinMax(board);
+        board.play(nextMove.get(0), Mark.X);
+
+        // Assert.assertEqual( Mark. X,board.position(1, 0)
+
+        Assert.assertEquals(10, cpuPlayer.getNumOfExploredNodes());
+    }
+
+    @Test
+    public void testAB_1() {
+        Board board = new Board();
+        board.play(new Move(0, 0), Mark.X);
+        board.play(new Move(0, 2), Mark.X);
+        board.play(new Move(1, 1), Mark.O);
+        board.play(new Move(1, 2), Mark.O);
+        board.play(new Move(2, 0), Mark.O);
+        board.play(new Move(2, 1), Mark.X);
+
+        CPUPlayer cpuPlayer = new CPUPlayer(Mark.X);
+        ArrayList<Move> nextMove = new ArrayList<>();
+        nextMove = cpuPlayer.getNextMoveAB(board);
+        board.play(nextMove.get(0), Mark.X);
+
+        Assert.assertEquals(board.position(0, 1), Mark.X);
+
+        Assert.assertEquals(7, cpuPlayer.getNumOfExploredNodes());
+    }
+
+    @Test
+    public void testAB_2() {
+        Board board = new Board();
+        board.play(new Move(0, 0), Mark.X);
+        board.play(new Move(0, 1), Mark.X);
+        board.play(new Move(1, 1), Mark.O);
+        board.play(new Move(1, 2), Mark.O);
+        board.play(new Move(2, 1), Mark.O);
+        board.play(new Move(2, 2), Mark.X);
+
+        CPUPlayer cpuPlayer = new CPUPlayer(Mark.X);
+        ArrayList<Move> nextMove = new ArrayList<>();
+        nextMove = cpuPlayer.getNextMoveMinMax(board);
+        board.play(nextMove.get(0), Mark.X);
+
+        // Assert.assertEqual( Mark. X,board.position(1, 0)
+
         Assert.assertEquals(10, cpuPlayer.getNumOfExploredNodes());
     }
 

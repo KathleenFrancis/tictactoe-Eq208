@@ -95,7 +95,7 @@ class CPUPlayer {
                 // enlevez le coup
                 board.play(move, Mark.EMPTY);
             }
-            board.printBoard();
+
             System.out.println(evaluation + " & " + numExploredNodes);
             return (minScore);
         }
@@ -106,9 +106,78 @@ class CPUPlayer {
     // ont le même score.
     public ArrayList<Move> getNextMoveAB(Board board) {
         numExploredNodes = 0;
+        ArrayList<Move> possibleMoves = board.possibleMoves();
+        int bestScore = Integer.MIN_VALUE;
+        ArrayList<Move> bestMoves = new ArrayList<>();
+        int alpha = Integer.MIN_VALUE;
+        int beta = Integer.MAX_VALUE;
+        for (Move move : possibleMoves) {
+            numExploredNodes++;
+            board.play(move, cpu);
+            int score = alphaBeta(board, false, alpha, beta);
+            board.play(move, Mark.EMPTY);
+            if (score > bestScore) {
+                alpha = score;
+                bestScore = score;
+                bestMoves.clear();
+                bestMoves.add(move);
+            } else if (score == bestScore) {
+                bestMoves.add(move);
+            }
+        }
+        return bestMoves;
 
-        return;
+    }
 
+    private int alphaBeta(Board board, Boolean isMax, int alpha, int beta) {
+        // condition d'arret
+        int evaluation = board.evaluate(cpu);
+
+        if (evaluation != 1) {
+            return evaluation;
+        }
+
+        ArrayList<Move> possibleMoves = board.possibleMoves();
+        if (possibleMoves.isEmpty()) {
+            return 0;
+        }
+
+        if (numExploredNodes < Integer.MAX_VALUE) {
+            // numExploredNodes++;
+        } else {
+            return board.getHeuristique(cpu);
+        }
+
+        if (isMax) {
+            int maxScore = Integer.MIN_VALUE;
+            for (Move move : possibleMoves) {
+                numExploredNodes++;
+                board.play(move, cpu);
+                int score = alphaBeta(board, false, alpha, beta);
+                maxScore = Math.max(score, maxScore);
+                alpha = Math.max(alpha, maxScore);
+                board.play(move, Mark.EMPTY);
+                if (alpha > beta) {
+                    return alpha;
+
+                }
+            }
+            return maxScore;
+        } else {
+            int minScore = Integer.MAX_VALUE;
+            for (Move move : possibleMoves) {
+                numExploredNodes++;
+                board.play(move, board.getOppositeMark(cpu));
+                int score = alphaBeta(board, true, alpha, beta);
+                minScore = Math.min(score, minScore);
+                beta = Math.min(beta, minScore);
+                board.play(move, Mark.EMPTY);
+                if (beta < alpha) {
+                    return beta;
+                }
+            }
+            return minScore;
+        }
     }
 
 }
